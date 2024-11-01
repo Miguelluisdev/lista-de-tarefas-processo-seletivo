@@ -9,7 +9,7 @@ export const useTasks = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await fetch("http://localhost:8080/tasks")
+        const response = await fetch("https://backend-oyy1.onrender.com/tasks")
         if (!response.ok) {
           throw new Error("Erro de network")
         }

@@ -7,7 +7,7 @@ export const useDeleteTask = () => {
   const deleteTask = async (taskId: number) => {
     setLoading(true)
     try {
-      const response = await fetch(`http://localhost:8080/delete/${taskId}`, {
+      const response = await fetch(`https://backend-oyy1.onrender.com/delete/${taskId}`, {
         method: "DELETE",
       })
 

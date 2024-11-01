@@ -28,7 +28,7 @@ export const useAddTask = (onClose: () => void) => {
       const taskData = { name, cost, limitDate }
 
       try {
-        const response = await fetch("http://localhost:8080/create-tasks", {
+        const response = await fetch("https://backend-oyy1.onrender.com/create-tasks", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
