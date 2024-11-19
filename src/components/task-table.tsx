@@ -14,9 +14,9 @@ import { useTaskReorder } from "@/hooks/task-order"
 import { formatVisualCost } from "@/lib/format-cost"
 import { ChevronDown, ChevronUp } from "lucide-react"
 import { Suspense, useState } from "react"
-import { AddTaskDialog } from "../components/add-task-dialog"
-import { DeleteTaskDialog } from "../components/delete-task-dialog"
-import { EditTaskDialog } from "../components/edit-task-dialog"
+import { AddTaskDialog } from "./add-task-dialog"
+import { DeleteTaskDialog } from "./delete-task-dialog"
+import { EditTaskDialog } from "./edit-task-dialog"
 
 export default function TaskTable() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
@@ -26,10 +26,8 @@ export default function TaskTable() {
     useTaskReorder(tasks)
 
   return (
-    <div className="container  mx-auto p-4">
-      <h1 className="text-5xl pt-10 font-bold text-center mb-6">
-        Lista de Tarefas
-      </h1>
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl pt-3 font-bold text-center">Lista de Tarefas</h1>
 
       {error && <div className="text-red-600 mb-4">{error}</div>}
 
