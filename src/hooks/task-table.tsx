@@ -26,18 +26,17 @@ export default function TaskTable() {
     useTaskReorder(tasks)
 
   return (
-    <Suspense fallback={SkeletonLoader({ rows: 5, columns: 10 })}>
-      <div className="container  mx-auto p-4">
-        <h1 className="text-5xl pt-10 font-bold text-center mb-6">
-          Lista de Tarefas
-        </h1>
+    <div className="container  mx-auto p-4">
+      <h1 className="text-5xl pt-10 font-bold text-center mb-6">
+        Lista de Tarefas
+      </h1>
 
-        {error && <div className="text-red-600 mb-4">{error}</div>}
+      {error && <div className="text-red-600 mb-4">{error}</div>}
 
-        <Button className="mb-4" onClick={() => setIsAddModalOpen(true)}>
-          Adicionar task
-        </Button>
-
+      <Button className="mb-4" onClick={() => setIsAddModalOpen(true)}>
+        Adicionar task
+      </Button>
+      <Suspense fallback={SkeletonLoader({ rows: 5, columns: 10 })}>
         <Table>
           <TableHeader>
             <TableRow>
@@ -51,16 +50,15 @@ export default function TaskTable() {
           <TableBody>
             {localTasks.length > 0 ? (
               localTasks.map((task: any, index: any) => {
-                const isCostHigh = parseFloat(task.cost) >= 1000
                 return (
                   <TableRow
                     key={task.id}
-                    className={isCostHigh ? "bg-yellow-400" : ""}
+                    className={task.cost >= 1000 ? "bg-yellow-400" : ""}
                   >
                     <TableCell>{task.id}</TableCell>
                     <TableCell>{task.name}</TableCell>
                     <TableCell
-                      className={isCostHigh ? "text-red-800 font-bold" : ""}
+                      className={task.cost >= 1000 ? "text-red-700" : ""}
                     >
                       {formatVisualCost(task.cost)}
                     </TableCell>
@@ -95,12 +93,11 @@ export default function TaskTable() {
             )}
           </TableBody>
         </Table>
-
-        <AddTaskDialog
-          isOpen={isAddModalOpen}
-          onClose={() => setIsAddModalOpen(false)}
-        />
-      </div>
-    </Suspense>
+      </Suspense>
+      <AddTaskDialog
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+      />
+    </div>
   )
 }
