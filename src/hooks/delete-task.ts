@@ -7,9 +7,12 @@ export const useDeleteTask = () => {
   const deleteTask = async (taskId: number) => {
     setLoading(true)
     try {
-      const response = await fetch(`https://backend-oyy1.onrender.com/delete/${taskId}`, {
-        method: "DELETE",
-      })
+      const response = await fetch(
+        `https://backend-oyy1.onrender.com/delete/${taskId}`,
+        {
+          method: "DELETE",
+        },
+      )
 
       if (!response.ok) {
         throw new Error("Erro ao deletar a tarefa")

@@ -27,7 +27,9 @@ const useFetchTaskById = (taskId: number) => {
     const fetchTask = async () => {
       dispatch({ type: "FETCH_START" })
       try {
-        const response = await fetch(`https://backend-oyy1.onrender.com/tasks/${taskId}`)
+        const response = await fetch(
+          `https://backend-oyy1.onrender.com/tasks/${taskId}`,
+        )
         if (!response.ok) {
           throw new Error("Tarefa não encontrada")
         }

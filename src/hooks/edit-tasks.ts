@@ -57,13 +57,16 @@ export const useEditTask = (onClose: () => void) => {
     const taskData = { name, cost, limitDate }
 
     try {
-      const response = await fetch(`https://backend-oyy1.onrender.com/upload/${taskId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `https://backend-oyy1.onrender.com/upload/${taskId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(taskData),
         },
-        body: JSON.stringify(taskData),
-      })
+      )
 
       if (!response.ok) {
         throw new Error("Erro ao atualizar a tarefa")

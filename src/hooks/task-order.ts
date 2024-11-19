@@ -22,13 +22,16 @@ export function useTaskReorder(initialTasks: Task[] = []) {
         order: index,
       }))
 
-      const response = await fetch("https://backend-oyy1.onrender.com/tasks/reorder", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://backend-oyy1.onrender.com/tasks/reorder",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ reorderedTasks }),
         },
-        body: JSON.stringify({ reorderedTasks }),
-      })
+      )
 
       if (!response.ok) {
         console.error("Falha ao salvar a reordenação no servidor.")

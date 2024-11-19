@@ -92,13 +92,16 @@ export const useAddTask = (onClose: () => void) => {
       }
 
       try {
-        const response = await fetch("https://backend-oyy1.onrender.com/create-tasks", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+        const response = await fetch(
+          "https://backend-oyy1.onrender.com/create-tasks",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(taskData),
           },
-          body: JSON.stringify(taskData),
-        })
+        )
 
         if (!response.ok) {
           throw new Error("Erro ao criar a tarefa")
