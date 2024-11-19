@@ -1,7 +1,8 @@
-import { useState } from "react"
+"use client"
+import { useEffect, useState } from "react"
 import { toast } from "sonner"
-
-
+import { formatCost } from "../lib/format-cost"
+import { formatDate } from "../lib/format-date"
 
 export const useEditTask = (onClose: () => void) => {
   const [name, setName] = useState("")
@@ -12,23 +13,47 @@ export const useEditTask = (onClose: () => void) => {
     cost?: string
     limitDate?: string
   }>({})
-  const [loading, setLoading] = useState(false)
+  const [isFormValid, setIsFormValid] = useState(false)
+
+  const setData = (task: { name: string; cost: number; limitDate: string }) => {
+    setName(task.name)
+    setCost(task.cost)
+
+    const formattedDate = task.limitDate.split("T")[0]
+    setLimitDate(formattedDate)
+  }
 
   const validateForm = () => {
     const newErrors: { name?: string; cost?: string; limitDate?: string } = {}
     if (!name) newErrors.name = "Por favor, insira o nome da tarefa."
-    if (!cost || cost <= 0)
-      newErrors.cost = "Por favor, insira um custo válido."
-    if (!limitDate) newErrors.limitDate = "Por favor, insira a data limite."
-
-    setErrors(newErrors)
+    if (!cost || cost <= 0) {
+      newErrors.cost = "Por favor, insira o custo da tarefa."
+    } else {
+      try {
+        formatCost(cost)
+      } catch (error: any) {
+        newErrors.cost = error.message
+      }
+    }
+    if (!limitDate) {
+      newErrors.limitDate = "Por favor , insira a data limite"
+    } else {
+      try {
+        formatDate(limitDate)
+      } catch (error: any) {
+        newErrors.limitDate = error.message
+      }
+    }
     return Object.keys(newErrors).length === 0
   }
+
+  useEffect(() => {
+    setIsFormValid(validateForm())
+  }, [name, cost, limitDate])
 
   const editTask = async (taskId: number) => {
     if (!validateForm()) return false
 
-    setLoading(true)
     const taskData = { name, cost, limitDate }
 
     try {
@@ -44,7 +69,7 @@ export const useEditTask = (onClose: () => void) => {
         throw new Error("Erro ao atualizar a tarefa")
       }
 
-      toast("Tarefa atualizada com sucesso! Atualize a pagina")
+      toast("Tarefa atualizada com sucesso! Atualize a página")
 
       setName("")
       setCost("")
@@ -55,8 +80,6 @@ export const useEditTask = (onClose: () => void) => {
       console.error("Erro:", error)
       toast("Erro ao atualizar a tarefa.")
       return false
-    } finally {
-      setLoading(false)
     }
   }
 
@@ -65,10 +88,11 @@ export const useEditTask = (onClose: () => void) => {
     cost,
     limitDate,
     errors,
-    loading,
     setName,
     setCost,
     setLimitDate,
+    setData,
     editTask,
+    isFormValid,
   }
 }

@@ -1,10 +1,9 @@
-import TaskTable from "@/components/task-table"
+import TaskTable from "@/hooks/task-table"
 
 export default function Home() {
-
   return (
-    <main>
+    <section>
       <TaskTable />
-    </main>
+    </section>
   )
 }

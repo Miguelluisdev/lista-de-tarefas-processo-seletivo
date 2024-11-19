@@ -1,5 +1,4 @@
 "use client"
-
 import { AddTaskDialogProps } from "@/@types/task"
 import { Button } from "@/components/ui/button"
 import {
@@ -22,6 +21,7 @@ export function AddTaskDialog({ isOpen, onClose }: AddTaskDialogProps) {
     setCost,
     setLimitDate,
     handleSubmit,
+    isFormValid,
   } = useAddTask(onClose)
 
   return (
@@ -57,7 +57,9 @@ export function AddTaskDialog({ isOpen, onClose }: AddTaskDialogProps) {
                   type="number"
                   id="new-cost"
                   value={cost}
-                  onChange={(e) => setCost(Number(e.target.value))}
+                  onChange={(e) =>
+                    setCost(e.target.value === "" ? "" : Number(e.target.value))
+                  }
                 />
                 {errors.cost && (
                   <span className="text-red-500 text-sm">{errors.cost}</span>
@@ -85,7 +87,9 @@ export function AddTaskDialog({ isOpen, onClose }: AddTaskDialogProps) {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit">Adicionar Tarefa</Button>
+            <Button type="submit" disabled={!isFormValid}>
+              Adicionar Tarefa
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
